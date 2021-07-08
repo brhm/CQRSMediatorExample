@@ -1,4 +1,5 @@
-﻿using ExampleLibrary.Models;
+﻿using ExampleLibrary.Commands;
+using ExampleLibrary.Models;
 using ExampleLibrary.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -29,6 +30,11 @@ namespace CQRSMediatorExample.API.Controllers
         public async Task<EmployeeModel> Get(int id)
         {
             return await _mediator.Send(new GetEmployeeByIdQuery(id));
+        }
+        [HttpPost]
+        public async Task<EmployeeModel> Post([FromBody]EmployeeModel employeeModel )
+        {
+            return await _mediator.Send(new AddEmployeeCommand(employeeModel.FirstName, employeeModel.LastName));
         }
     }
 }
